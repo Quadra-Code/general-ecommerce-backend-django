@@ -1,3 +1,12 @@
+# Manually Inserted
+__init__.cpython-36.pyc
+functions.cpython-36.pyc
+.DS_Store
+*.pyc
+.vscode
+images/
+migrations/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
