@@ -1,19 +1,62 @@
 from django.db import models
 
 # Create your models here.
-class Base_Entity(models.Model):
+class BaseEntity(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     # created_by = models.IntegerField()
-    updated = models.DateTimeField()
+    updated = models.DateTimeField(auto_now=True)
     # updated_by = models.IntegerField()
-    deleted = models.DateTimeField()
+    deleted = models.DateTimeField(null=True, blank=True)
     # deleted_by = models.IntegerField()
-    is_deleted = models.BooleanField(default=False, null=False)
+    is_deleted = models.BooleanField(default=False)
+    class Meta:
+        abstract = True
 
-class Categories(models.Model, Base_Entity):
-    name_ar = models.CharField(null=False, max_length=100, default='')
-    name_en = models.CharField(null=False, max_length=100, default='')
-    parent_category_id = models.IntegerField(null=False, default=0)
-    is_parent = models.BooleanField(null=False, default=False)
-    level = models.IntegerField(null=False, default=0)
-    image = models.CharField(blank=True, null=True)
+# class Brand(BaseEntity):
+#     name_ar = models.CharField(max_length=100)
+#     name_en = models.CharField(max_length=100)
+#     logo_url = models.CharField(null=True, blank=True, max_length=1000)
+
+#     def __str__(self):
+#         return f'Brand Ar-Name: {self.name_ar}, Brand En-Name: {self.name_en}'
+
+# class Coupons(BaseEntity):
+#     code = models.CharField(max_length=7)
+#     discount = models.IntegerField(default=0)
+#     is_active = models.BooleanField(default=False)
+
+#     def __str__(self):
+#         return f'Coupon Code: {self.code}, Discount: {self.discount}%, Coupon Is {'Active' if self.is_active else 'Not Active'}'
+
+# class Size(BaseEntity):
+#     name = models.CharField(max_length=100)
+
+#     def __str__(self):
+#         return f'Size Value Is: {self.name}'
+
+# class OrderStates(BaseEntity):
+#     name_ar = models.CharField(max_length=60)
+#     name_en = models.CharField(max_length=60)
+#     code = models.IntegerField(default=0)
+
+#     def __str__(self):
+#         return f'State Ar-Name: {self.name_ar}, State En-Name: {self.name_en}, State Code: {self.code}'
+
+# class Extras(BaseEntity):
+#     name_ar = models.CharField(max_length=60)
+#     name_en = models.CharField(max_length=60)
+#     price = models.DecimalField(default=0)
+
+#     def __str__(self):
+#         return f'Extra Ar-Name: {self.name_ar},Extra En-Name: {self.name_en}, Extra Price: {self.price}'
+
+# class Categories(BaseEntity):
+#     name_ar = models.CharField(max_length=100, default='')
+#     name_en = models.CharField(max_length=100, default='')
+#     parent = models.ForeignKey('self', on_delete=models.PROTECT, default=0)
+#     is_parent = models.BooleanField(default=False)
+#     level = models.IntegerField(default=0)
+#     image_url = models.CharField(blank=True, null=True, max_length=1000)
+
+#     def __str__(self):
+#         return f'Category Ar-Name: {self.name_ar}, Category En-Name: {self.name_en}, Category Level: {self.level}, Category Is {'Parent' if self.is_parent else 'Not Parent'}, Parent Category Id Is {self.parent.id}'

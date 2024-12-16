@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,8 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u!e59b75z)2uzrl7564d7)*n_o-8o&)m=b)ruhg@ma!u3(wfjl'
+# SECRET_KEY = 'django-insecure-u!e59b75z)2uzrl7564d7)*n_o-8o&)m=b)ruhg@ma!u3(wfjl'
 
+SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -37,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -72,26 +80,28 @@ WSGI_APPLICATION = 'general_ecommerce_backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
     'default': {
-        'ENGINE': 'mssql',
-        # 'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'localhost',
-        'PORT': '1433',
-        'NAME': 'GeneralEcommerceDb',
-        'USER': 'generalecommerceuser',
-        'PASSWORD': 'generalecommerceuser123#',
-        'OPTIONS': {
-            # Adjust the driver version if needed
-            'driver': 'ODBC Driver 17 for SQL Server',
-            'Trusted_Connection': 'yes'
-        },
-    }
+        'ENGINE': env('DB_ENGINE'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+    },
+    # 'sql-server': {
+    #     'ENGINE': 'mssql',
+    #     'HOST': 'localhost',
+    #     'PORT': '1433',
+    #     'NAME': 'GeneralEcommerceDb',
+    #     'USER': 'generalecommerceuser',
+    #     'PASSWORD': 'sebremo123#',
+    #     'OPTIONS': {
+    #         # Adjust the driver version if needed
+    #         'driver': 'ODBC Driver 17 for SQL Server',
+    #         'Trusted_Connection': 'yes'
+    #     },
+    # },
 }
 
 
@@ -130,6 +140,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+LOGIN_URL = '/login/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
