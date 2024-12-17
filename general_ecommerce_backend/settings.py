@@ -139,6 +139,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+AUTH_USER_MODEL = 'core.CustomUser'
 STATIC_URL = 'static/'
 LOGIN_URL = '/login/'
 MEDIA_URL = '/media/'
