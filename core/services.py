@@ -4,8 +4,7 @@ from core import serializers
 # Create your services here.
 
 class ResultView():
-    def __init__(self, is_success, data, msg):
-        print('in the main init')
+    def __init__(self, is_success=True, data=None, msg=''):
         self.is_success = is_success
         self.data = data
         self.msg = msg
