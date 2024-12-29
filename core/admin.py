@@ -1,22 +1,10 @@
-# from django.contrib import admin
-# # from .models import Brand
+from django.contrib import admin
+from .models import Brands
 
 # # Register your models here.
 
-# admin.register(
-#     [
-#         # Brand,
-#     ]
-# )
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser
-
-class CustomUserAdmin(UserAdmin):
-    model = CustomUser
-    list_display = ['username', 'email', 'first_name', 'last_name', 'is_staff']
-    fieldsets = UserAdmin.fieldsets + (
-        ('Additional Info', {'fields': ('image_url', 'country', 'city', 'address', 'postal_code')}),
-    )
-
-admin.site.register(CustomUser, CustomUserAdmin)
+admin.register(
+    [
+        Brands,
+    ]
+)

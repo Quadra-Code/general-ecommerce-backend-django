@@ -1,8 +1,8 @@
 from django.urls import path
-from core import views as CoreViews
+from users import views as UserViews
 urlpatterns = [
-    path('get-all-brands', CoreViews.get_all_brands, name='get_all_brands'),
-    path('create-brands', CoreViews.create_brand, name='create_brands'),
-    path('update-brands', CoreViews.update_brand, name='update_brands'),
-    path('delete-brands/<int:brand_id>', CoreViews.delete_brand, name='delete_brands'),
+    path('register', UserViews.register, name='register'),
+    # path('login', UserViews.login, name='login'),
+    # path('logout', User.update_brand, name='update_brands'),
+    # path('delete-brands/<int:brand_id>', User.delete_brand, name='delete_brands'),
 ]
