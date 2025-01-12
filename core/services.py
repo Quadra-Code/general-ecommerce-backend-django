@@ -1,17 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist
 from core import models
 from core import serializers
+from core.base_models import ResultView
 # Create your services here.
-
-class ResultView():
-    def __init__(self, is_success=True, data=None, msg=''):
-        self.is_success = is_success
-        self.data = data
-        self.msg = msg
-
-    def __str__(self):
-        return f'Operation Is{'' if self.is_success else 'n\'t'} Successful\nData: {self.data}\nMsg: {self.msg}'
-
 
 #region Brand Region
 def get_all_brands():
@@ -68,17 +59,16 @@ def delete_brand(brand_id):
     try:
         # here we can check if there is any related entities (products) if the business logic requires the brand field not to be null
         # else we can delete and the models on delete will set the field to null
-        # if models.Products.objects.filter(brand_id=brand_id).exists():
-        #     result.msg = 'There are products that depend on this brand'
-        brand = models.Brands.objects.get(id = brand_id)
-        brand.delete()
-        result.is_success = True
-        result.data = brand
-        result.msg = 'Brand Deleted Successfully'
+        if models.Products.objects.filter(brand_id=brand_id).exists():
+            result.msg = 'There are products that depend on this brand'
+        else:
+            brand = models.Brands.objects.get(id = brand_id)
+            brand.delete()
+            result.is_success = True
+            result.data = brand
+            result.msg = 'Brand Deleted Successfully'
     except Exception as e:
         result.msg = f'Error Happened While Deleting Brand.\nError Message: {e}'
     finally:
         return result
 #endregion
-
-#region 
