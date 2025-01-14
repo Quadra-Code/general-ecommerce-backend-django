@@ -90,18 +90,13 @@ DATABASES = {
         'USER': env('DB_USER'),
         'PASSWORD': env('DB_PASSWORD'),
     },
-    # 'sql-server': {
-    #     'ENGINE': 'mssql',
-    #     'HOST': 'localhost',
-    #     'PORT': '1433',
-    #     'NAME': 'GeneralEcommerceDb',
-    #     'USER': 'generalecommerceuser',
-    #     'PASSWORD': 'sebremo123#',
-    #     'OPTIONS': {
-    #         # Adjust the driver version if needed
-    #         'driver': 'ODBC Driver 17 for SQL Server',
-    #         'Trusted_Connection': 'yes'
-    #     },
+    # 'cloud': {
+    #     'ENGINE': env('DB_ENGINE'),
+    #     'HOST': env('CLOUD_DB_HOST'),
+    #     'PORT': env('CLOUD_DB_PORT'),
+    #     'NAME': env('CLOUD_DB_NAME'),
+    #     'USER': env('CLOUD_DB_USER'),
+    #     'PASSWORD': env('CLOUD_DB_PASSWORD'),
     # },
 }
 
