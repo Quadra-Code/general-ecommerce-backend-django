@@ -1,7 +1,8 @@
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import api_view
-from users.services import register_user_service, login_user_service#, login_admin_service
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from users.services import register_user_service, login_user_service, change_password_service#, login_admin_service
 # Create your views here.
 
 
@@ -53,7 +54,9 @@ output
 '''
 @api_view(['POST'])
 def login_user(request):
+    # print(request.body, request.data, request.headers, sep='\n=>')
     login_result = login_user_service(request.data)
+    # login_result = await login_user_service(request.data)
     status_code = (
         status.HTTP_202_ACCEPTED if login_result.is_success
         else status.HTTP_400_BAD_REQUEST
@@ -69,6 +72,27 @@ def login_user(request):
 #         else status.HTTP_400_BAD_REQUEST
 #     )
 #     return Response(login_result.to_dict(), status=status_code)
+
+'''
+input
+{
+    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiIwMTU1NTgwNzE3MiIsImZ1bGxfbmFtZSI6IkpvaG4gaGFuIiwiZXhwIjoxNzM2OTM4OTM0LCJpYXQiOjE3MzY5Mzg3NTQsImlzcyI6ImdlbmVyYWxfZWNvbW1lcmNlX2JhY2tlbmQifQ.g4VSe9FfDMrfDycMX2y5YZMNTUuzNIT_IErP-OYlR2E",
+    "old_password": "securepassword",
+    "new_password": "123",
+    "confirm_new_password": "123"
+}
+'''
+
+@api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+def change_password(request):
+    print('got here in the view')
+    change_password_result = change_password_service(request)
+    status_code = (
+        status.HTTP_202_ACCEPTED if change_password_result.is_success
+        else status.HTTP_400_BAD_REQUEST
+    )
+    return Response(change_password_result.to_dict(), status=status_code)
 
 '''
 pip install twilio => all 15 following packages

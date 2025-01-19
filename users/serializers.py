@@ -14,5 +14,20 @@ class RegisterSerializer(serializers.Serializer): # here i didn't use model seri
     # image_url = serializers.CharField(max_length=1000, required=False, allow_blank=True)
 
 class LoginSerializer(serializers.Serializer):
-    phone_number = serializers.CharField(max_length=150)
+    username = serializers.CharField(max_length=20)
     password = serializers.CharField(write_only=True)
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(write_only=True)
+    new_password = serializers.CharField(write_only=True)
+    confirm_new_password = serializers.CharField(write_only=True)
+
+from rest_framework_simplejwt.tokens import RefreshToken
+class CustomRefreshToken(RefreshToken):
+    @classmethod
+    def for_user(cls, user):
+        token = cls()
+        token['user_id'] = user.id
+        token['username'] = user.username
+        token['role'] = user.role
+        return token
