@@ -42,7 +42,8 @@ output
 {
     "is_success": true,
     "data": {
-        "token": "generated token",
+        "access_token": "generated token",
+        "refresh_token": "generated token",
         "user": {
             "id": 1,
             "username": "01555807172",
