@@ -13,14 +13,18 @@ class Countries(BaseEntity):
 
 class Cities(BaseEntity):
     name = models.CharField(max_length=60)
-    country = models.ForeignKey(to=Countries, on_delete=models.PROTECT)
+    country = models.ForeignKey(
+        to=Countries,
+        on_delete=models.PROTECT,
+        related_name="cities"
+    )
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['name', 'country'], name='country_city_unique_constraint', violation_error_message='A Country must has unique city names')
+            models.UniqueConstraint(fields=['name', 'country'], name='country_city_unique_constraint', violation_error_message='A Country must have unique city names')
         ]
         ordering = ['name']
-    
+
     def __str__(self):
         return f'Country => {self.country.name} | City => {self.name}'
 
